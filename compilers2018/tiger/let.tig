@@ -1,0 +1,6 @@
+let
+ var a := 5
+ var b : string := "Hello"
+in
+ a + b
+end

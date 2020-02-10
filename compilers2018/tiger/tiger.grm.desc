@@ -1,0 +1,601 @@
+5 shift/reduce conflicts
+
+error:  state 15: shift/reduce conflict (shift TYPE, reduce by rule 19)
+error:  state 20: shift/reduce conflict (shift DIVIDE, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift TIMES, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift MINUS, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift PLUS, reduce by rule 9)
+
+state 0:
+
+	program : . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 2
+	program	goto 45
+	lvalue	goto 1
+
+	.	error
+
+
+state 1:
+
+	exp : lvalue .  (reduce by rule 1)
+	exp : lvalue . ASSIGN exp 
+
+	ASSIGN	shift 8
+
+
+	.	reduce by rule 1
+
+
+state 2:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	program : exp .  (reduce by rule 0)
+
+	PLUS	shift 12
+	MINUS	shift 11
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 0
+
+
+state 3:
+
+	exp : NIL .  (reduce by rule 2)
+
+
+
+	.	reduce by rule 2
+
+
+state 4:
+
+	exp : LET . declist IN END 
+	exp : LET . declist IN expseq END 
+
+	VAR	shift 19
+	TYPE	shift 18
+
+	vardec	goto 17
+	tyseq	goto 16
+	tydec	goto 15
+	dec	goto 14
+	declist	goto 13
+
+	.	error
+
+
+state 5:
+
+	exp : STRING .  (reduce by rule 4)
+
+
+
+	.	reduce by rule 4
+
+
+state 6:
+
+	exp : INT .  (reduce by rule 3)
+
+
+
+	.	reduce by rule 3
+
+
+state 7:
+
+	lvalue : ID .  (reduce by rule 12)
+
+
+
+	.	reduce by rule 12
+
+
+state 8:
+
+	exp : lvalue ASSIGN . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 20
+	lvalue	goto 1
+
+	.	error
+
+
+state 9:
+
+	exp : exp DIVIDE . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 21
+	lvalue	goto 1
+
+	.	error
+
+
+state 10:
+
+	exp : exp TIMES . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 22
+	lvalue	goto 1
+
+	.	error
+
+
+state 11:
+
+	exp : exp MINUS . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 23
+	lvalue	goto 1
+
+	.	error
+
+
+state 12:
+
+	exp : exp PLUS . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 24
+	lvalue	goto 1
+
+	.	error
+
+
+state 13:
+
+	exp : LET declist . IN END 
+	exp : LET declist . IN expseq END 
+
+	IN	shift 25
+
+
+	.	error
+
+
+state 14:
+
+	declist : dec .  (reduce by rule 13)
+	declist : dec . declist 
+
+	VAR	shift 19
+	TYPE	shift 18
+
+	vardec	goto 17
+	tyseq	goto 16
+	tydec	goto 15
+	dec	goto 14
+	declist	goto 26
+
+	.	reduce by rule 13
+
+error:  state 15: shift/reduce conflict (shift TYPE, reduce by rule 19)
+
+state 15:
+
+	tyseq : tydec .  (reduce by rule 19)
+	tyseq : tydec . tyseq 
+
+	TYPE	shift 18
+
+	tyseq	goto 27
+	tydec	goto 15
+
+	.	reduce by rule 19
+
+
+state 16:
+
+	dec : tyseq .  (reduce by rule 16)
+
+
+
+	.	reduce by rule 16
+
+
+state 17:
+
+	dec : vardec .  (reduce by rule 15)
+
+
+
+	.	reduce by rule 15
+
+
+state 18:
+
+	tydec : TYPE . ID EQ ty 
+
+	ID	shift 28
+
+
+	.	error
+
+
+state 19:
+
+	vardec : VAR . ID ASSIGN exp 
+	vardec : VAR . ID COLON ID ASSIGN exp 
+
+	ID	shift 29
+
+
+	.	error
+
+error:  state 20: shift/reduce conflict (shift DIVIDE, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift TIMES, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift MINUS, reduce by rule 9)
+error:  state 20: shift/reduce conflict (shift PLUS, reduce by rule 9)
+
+state 20:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	exp : lvalue ASSIGN exp .  (reduce by rule 9)
+
+	PLUS	shift 12
+	MINUS	shift 11
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 9
+
+
+state 21:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	exp : exp DIVIDE exp .  (reduce by rule 8)
+
+
+
+	.	reduce by rule 8
+
+
+state 22:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp TIMES exp .  (reduce by rule 7)
+	exp : exp . DIVIDE exp 
+
+
+
+	.	reduce by rule 7
+
+
+state 23:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp MINUS exp .  (reduce by rule 6)
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 6
+
+
+state 24:
+
+	exp : exp . PLUS exp 
+	exp : exp PLUS exp .  (reduce by rule 5)
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 5
+
+
+state 25:
+
+	exp : LET declist IN . END 
+	exp : LET declist IN . expseq END 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	END	shift 32
+	NIL	shift 3
+
+	exp	goto 31
+	lvalue	goto 1
+	expseq	goto 30
+
+	.	error
+
+
+state 26:
+
+	declist : dec declist .  (reduce by rule 14)
+
+
+
+	.	reduce by rule 14
+
+
+state 27:
+
+	tyseq : tydec tyseq .  (reduce by rule 20)
+
+
+
+	.	reduce by rule 20
+
+
+state 28:
+
+	tydec : TYPE ID . EQ ty 
+
+	EQ	shift 33
+
+
+	.	error
+
+
+state 29:
+
+	vardec : VAR ID . ASSIGN exp 
+	vardec : VAR ID . COLON ID ASSIGN exp 
+
+	COLON	shift 35
+	ASSIGN	shift 34
+
+
+	.	error
+
+
+state 30:
+
+	exp : LET declist IN expseq . END 
+
+	END	shift 36
+
+
+	.	error
+
+
+state 31:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	expseq : exp .  (reduce by rule 23)
+	expseq : exp . SEMICOLON expseq 
+
+	SEMICOLON	shift 37
+	PLUS	shift 12
+	MINUS	shift 11
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 23
+
+
+state 32:
+
+	exp : LET declist IN END .  (reduce by rule 10)
+
+
+
+	.	reduce by rule 10
+
+
+state 33:
+
+	tydec : TYPE ID EQ . ty 
+
+	ID	shift 39
+
+	ty	goto 38
+
+	.	error
+
+
+state 34:
+
+	vardec : VAR ID ASSIGN . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 40
+	lvalue	goto 1
+
+	.	error
+
+
+state 35:
+
+	vardec : VAR ID COLON . ID ASSIGN exp 
+
+	ID	shift 41
+
+
+	.	error
+
+
+state 36:
+
+	exp : LET declist IN expseq END .  (reduce by rule 11)
+
+
+
+	.	reduce by rule 11
+
+
+state 37:
+
+	expseq : exp SEMICOLON . expseq 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 31
+	lvalue	goto 1
+	expseq	goto 42
+
+	.	error
+
+
+state 38:
+
+	tydec : TYPE ID EQ ty .  (reduce by rule 21)
+
+
+
+	.	reduce by rule 21
+
+
+state 39:
+
+	ty : ID .  (reduce by rule 22)
+
+
+
+	.	reduce by rule 22
+
+
+state 40:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	vardec : VAR ID ASSIGN exp .  (reduce by rule 17)
+
+	PLUS	shift 12
+	MINUS	shift 11
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 17
+
+
+state 41:
+
+	vardec : VAR ID COLON ID . ASSIGN exp 
+
+	ASSIGN	shift 43
+
+
+	.	error
+
+
+state 42:
+
+	expseq : exp SEMICOLON expseq .  (reduce by rule 24)
+
+
+
+	.	reduce by rule 24
+
+
+state 43:
+
+	vardec : VAR ID COLON ID ASSIGN . exp 
+
+	ID	shift 7
+	INT	shift 6
+	STRING	shift 5
+	LET	shift 4
+	NIL	shift 3
+
+	exp	goto 44
+	lvalue	goto 1
+
+	.	error
+
+
+state 44:
+
+	exp : exp . PLUS exp 
+	exp : exp . MINUS exp 
+	exp : exp . TIMES exp 
+	exp : exp . DIVIDE exp 
+	vardec : VAR ID COLON ID ASSIGN exp .  (reduce by rule 18)
+
+	PLUS	shift 12
+	MINUS	shift 11
+	TIMES	shift 10
+	DIVIDE	shift 9
+
+
+	.	reduce by rule 18
+
+
+state 45:
+
+
+	EOF	accept
+
+
+	.	error
+
+53 of 139 action table entries left after compaction
+36 goto table entries
